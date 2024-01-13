@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5433:${DB_PORT}"
+
+  redis:
+    image: redis:6.2
+    ports:
+      - "6378:6379"
+
+  web:
+    build: .
+    command: gunicorn news.wsgi:application --workers 3 --bind 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+
+  nginx:
+    image: nginx:1.21
+    volumes:
+      - /home/aroxan/news/staticfiles:/usr/src/app/staticfiles
+      - ./config/nginx:/etc/nginx/conf.d
+      - media_volume:/usr/src/app/media
+    ports:
+      - "8080:80"
+    depends_on:
+      - web
+
+  celery:
+    build: .
+    command: celery -A news worker --loglevel=info
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+
+  celery-beat:
+    build: .
+    command: celery -A news beat --loglevel=info
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<h1>Latest News</h1>
+    <input type="text" id="searchQuery" placeholder="search...">
+    <div id="searchResults">
+        <ul>
+            {% for news in news_data %}
+            {% if news.url_to_image %}
+                <li data-url="{{ news.url }}">
+                    <h2>{{ news.title }}</h2>
+                    <img src="{{ news.url_to_image }}" alt="{{ news.title }}" width="300" height="200">
+                    <p>{{ news.description }}</p>
+                </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock  %}
