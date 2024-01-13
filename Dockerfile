@@ -19,4 +19,4 @@ COPY . .
 EXPOSE 8000
 
 # Команда для запуска приложения
-CMD ["gunicorn", "--workers", "3", "--bind", "localhost:8000", "news.wsgi:application"]
+CMD ["gunicorn", "--workers", "3", "--bind", "46.19.67.89:8000", "news.wsgi:application"]

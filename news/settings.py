@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', '<ваш_домен>', '<ваш_IP>']
+ALLOWED_HOSTS = ['0.0.0.0', '46.19.67.89', 'localhost', '127.0.0.1', '<ваш_домен>', '<ваш_IP>']
 
 
 INSTALLED_APPS = [
@@ -93,7 +93,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'http://localhost:8080/static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
