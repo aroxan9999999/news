@@ -5,7 +5,6 @@
                 <p>{{ news.description }}</p>
                 <!-- Установка фиксированного размера для всех изображений -->
                 <img src="{{ news.url_to_image }}" alt="{{ news.title }}" width="300" height="200">
-                <p><a href="{{ news.get_absolute_url }}">Читать полностью</a></p>
             </li>
         {% endfor %}
     </ul>
